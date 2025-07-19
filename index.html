@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backend Engineering Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
     <style>
         :root {
             --primary: #4361ee;
@@ -364,6 +365,7 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
         }
 
         .form-group {
@@ -445,6 +447,66 @@
             color: var(--text-light);
         }
 
+        /* Status message styling */
+        #form-status {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            display: none;
+            z-index: 10;
+        }
+
+        .success-message {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .error-message {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn.loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .btn.loading:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s ease infinite;
+        }
+
+        @keyframes button-loading-spinner {
+            from { transform: rotate(0turn); }
+            to { transform: rotate(1turn); }
+        }
+
+        /* Email confirmation styling */
+        .confirmation {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -498,10 +560,10 @@
     <section class="hero">
         <div class="container hero-content">
             <div class="tagline">
-                <i class="fas fa-code"></i> Backend Engineering & Team Leadership
+                <i class="fas fa-code"></i> Engineering by First Principles
             </div>
-            <h1>Transforming Systems Through Efficient Backend Solutions</h1>
-            <p>Senior Backend Engineer with expertise in Java optimization, distributed systems, and Azure infrastructure</p>
+            <h1>Transforming Systems Through Efficient Backend Solutionizing</h1>
+            <p>Backend Engineer with expertise in Java optimization, distributed systems, and Azure Infrastructure</p>
             <a href="#projects" class="btn">View My Projects</a>
         </div>
     </section>
@@ -513,9 +575,9 @@
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Backend Engineering & Leadership Specialist</h3>
-                    <p>I'm a passionate and at times hyperfocused backend engineer with over 3 years of experience specializing in Java-based systems, performance optimization, and cloud infrastructure. My expertise lies in transforming monolithic architectures into scalable, high-performance distributed systems.</p>
-                    <p>As a technical lead, I've successfully managed teams of developers to deliver complex backend solutions while ensuring best practices in code quality, testing, and deployment pipelines. My experience includes significant work with Azure infrastructure provisioning and optimization.</p>
+                    <h3>Backend Engineering & First Principle Enthusiast</h3>
+                    <p>I'm a passionate and at times hyperfocused Backend Engineer with over 3 years of experience specializing in Java-based systems, performance optimization, and cloud infrastructure. My expertise lies in transforming monolithic architectures into scalable, high-performance distributed systems.</p>
+                    <p>As a technical supervisor, I've successfully managed teams of developers to deliver complex backend solutions while ensuring best practices in code quality, testing, and deployment pipelines. My experience includes significant work with Azure infrastructure provisioning and optimization.</p>
                     <p>I thrive on solving complex technical challenges and provide my two cents to fellow developers and to help them grow their skills in backend engineering and scalable system design while trying my best to absorb best industry etiquettes when it comes to solutionizing.</p>
                     
                     <div class="skills">
@@ -538,10 +600,7 @@
                             <i class="fas fa-server"></i> Azure App Services
                         </div>
                         <div class="skill-chip">
-                            <i class="fas fa-chart-line"></i>Back-end Performance Improvement Strategies
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-users"></i> Leadership
+                            <i class="fas fa-chart-line"></i>Back-End Performance Improvement Strategies
                         </div>
                     </div>
                 </div>
@@ -605,213 +664,4 @@
                         <h3>Java 11 to 21 Migration</h3>
                     </div>
                     <div class="project-body">
-                        <h4>Performance Optimization</h4>
-                        <p>Led the migration of 15+ microservices and a monolith from Java 11 to Java 21, leveraging new language features and performance improvements.</p>
-                        <p>Implemented Virtual Threads to handle more concurrent requests with potentially less memory footprint.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">Java 21</span>
-                            <span class="tech-item">Virtual Threads</span>
-                            <span class="tech-item">Spring Boot 3</span>
-                            <span class="tech-item">JMeter</span>
-                        </div>
-                        <p><strong>Results:</strong> 45% throughput improvement, 50% reduced memory footprint</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Asynchronous Logging Implementation</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Monolith Optimization</h4>
-                        <p>Designed and implemented an asynchronous logging solution for a legacy monolith application handling 1,000 RPM.</p>
-                        <p>Reduced I/O blocking by decoupling logging operations from main request threads using a LMAX Disrupter.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">Log4j2</span>
-                            <span class="tech-item">Disruptor Pattern</span>
-                            <span class="tech-item">Java</span>
-                            <span class="tech-item">Async Appenders</span>
-                        </div>
-                        <p><strong>Results:</strong> 40% improvement in request latency, eliminated logging bottlenecks</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Workflow Parallelization</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Concurrency Optimization</h4>
-                        <p>Identified and parallelized uncoupled workflow steps in a critical order processing service using CompletableFuture.</p>
-                        <p>Implemented a configurable thread pool management system to prevent resource exhaustion.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">CompletableFuture</span>
-                            <span class="tech-item">Java Concurrency</span>
-                            <span class="tech-item">Thread Pools</span>
-                            <span class="tech-item">Spring Framework</span>
-                        </div>
-                        <p><strong>Results:</strong> Reduced processing time of our monolith from 2000ms to 1100ms (55% improvement)</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Kafka Event Streaming System</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Distributed Architecture</h4>
-                        <p>Designed and implemented a Idempotent Kafka Utility with Producer and Consumer Configuration.</p>
-                        <p>Created producer/consumer implementations with exactly-once semantics and dead-letter queue handling alonside custom error table implementations.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">Apache Kafka</span>
-                            <span class="tech-item">Spring Kafka</span>
-                            <span class="tech-item">Azure App Service</span>
-                            <span class="tech-item">Asynchronous Event Processing</span>
-                        </div>
-                        <p><strong>Results:</strong> Implemented a dashboard under Azure to monitor all Kafka Messages/Failed Events for Auditing</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" style="background-color: var(--bg-alt);">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>rahuldebnits2021@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+91-7002179648</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Hyderabad, Telangana</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" class="form-control" rows="5" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-stack-overflow"></i></a>
-            </div>
-            <p class="copyright">© 2025 Backend Engineering Portfolio. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        
-        // Check for saved theme preference or respect OS preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
-            body.classList.add('dark-mode');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-        });
-        
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
-        });
-        
-        // Animate project cards on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.project-card, .experience-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
-        });
-    </script>
-</body>
-</html>
+                        <h4>Performance Opt
