@@ -45,6 +45,18 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Full-page particle background */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.35; /* Increased opacity */
         }
 
         .container {
@@ -52,6 +64,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 2;
         }
 
         header {
@@ -73,6 +87,9 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
@@ -115,6 +132,14 @@
             width: 100%;
         }
 
+        nav ul li a.active {
+            color: var(--primary);
+        }
+
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
         .theme-toggle {
             background: var(--bg-alt);
             border: none;
@@ -126,6 +151,11 @@
             display: flex;
             align-items: center;
             padding: 0 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
         }
 
         .theme-toggle .toggle-circle {
@@ -144,12 +174,18 @@
         .hero {
             padding: 6rem 0 4rem;
             text-align: center;
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -159,12 +195,15 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
+            animation: fadeInUp 1s ease;
         }
 
         .hero p {
             font-size: 1.5rem;
             color: var(--text-light);
             margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
         }
 
         .tagline {
@@ -176,10 +215,12 @@
             color: var(--primary);
             margin: 1rem 0;
             box-shadow: 0 4px 6px var(--shadow);
+            animation: fadeIn 0.8s ease;
         }
 
         section {
             padding: 5rem 0;
+            position: relative;
         }
 
         .section-title {
@@ -238,10 +279,24 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill-chip:hover {
+            transform: translateY(-3px);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .skill-chip:hover i {
+            color: white;
         }
 
         .skill-chip i {
             color: var(--primary);
+            transition: color 0.3s ease;
         }
 
         .experience-grid {
@@ -256,11 +311,28 @@
             padding: 2rem;
             box-shadow: 0 5px 15px var(--shadow);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
         .experience-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px var(--shadow);
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--primary);
+            transition: height 0.5s ease;
+        }
+
+        .experience-card:hover::before {
+            height: 100%;
         }
 
         .experience-card h3 {
@@ -293,10 +365,12 @@
             overflow: hidden;
             box-shadow: 0 5px 15px var(--shadow);
             transition: var(--transition);
+            position: relative;
+            transform-style: preserve-3d;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
             box-shadow: 0 15px 30px var(--shadow);
         }
 
@@ -304,10 +378,26 @@
             background: var(--primary);
             color: white;
             padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--primary);
+            transform: skewY(-2deg);
+            z-index: 0;
         }
 
         .project-body {
             padding: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .project-body h4 {
@@ -328,6 +418,13 @@
             border-radius: 50px;
             font-size: 0.85rem;
             color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+            background: var(--primary);
+            color: white;
         }
 
         .contact-container {
@@ -346,6 +443,14 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: transform 0.3s ease;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            background: var(--bg);
         }
 
         .contact-icon {
@@ -358,6 +463,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1);
+            background: var(--secondary);
         }
 
         .contact-form {
@@ -370,6 +482,7 @@
 
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .form-group label {
@@ -385,11 +498,13 @@
             border-radius: 5px;
             background: var(--bg);
             color: var(--text);
+            transition: all 0.3s ease;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
 
         .btn {
@@ -403,6 +518,8 @@
             border: none;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
@@ -411,10 +528,28 @@
             box-shadow: 0 5px 15px var(--shadow);
         }
 
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg);
+            transition: all 0.6s;
+        }
+
+        .btn:hover::after {
+            left: 120%;
+        }
+
         footer {
             background: var(--bg-alt);
             padding: 3rem 0;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .social-links {
@@ -435,12 +570,34 @@
             color: var(--primary);
             font-size: 1.2rem;
             transition: var(--transition);
+            position: relative;
         }
 
         .social-links a:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-5px);
+        }
+
+        .social-links a::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .social-links a:hover::after {
+            opacity: 1;
         }
 
         .copyright {
@@ -505,6 +662,67 @@
             text-align: center;
             margin-top: 2rem;
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @media (max-width: 768px) {
@@ -536,16 +754,31 @@
             .section-title h2 {
                 font-size: 2rem;
             }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Full-page particle background -->
+    <div id="particles-js"></div>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
     <header>
         <div class="container nav-container">
-            <div class="logo">Engineering/<span>Portfolio</span></div>
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                Engineering/<span>Portfolio</span>
+            </div>
             <nav>
                 <ul>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#about" class="active">About</a></li>
                     <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -600,8 +833,14 @@
                             <i class="fas fa-server"></i> Azure App Services
                         </div>
                         <div class="skill-chip">
-                            <i class="fas fa-chart-line"></i>Back-End Performance Improvement Strategies
+                            <i class="fas fa-chart-line"></i> Performance Optimization
                         </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <a href="#" class="btn" id="resumeBtn">
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
                     </div>
                 </div>
             </div>
@@ -614,7 +853,7 @@
                 <h2>Professional Experience</h2>
             </div>
             <div class="experience-grid">
-                <div class="experience-card">
+                <div class="experience-card animate-on-scroll">
                     <h3>Backend Engineer & Team Lead</h3>
                     <h4>UHG.</h4>
                     <span class="date">2022 - Present</span>
@@ -626,7 +865,7 @@
                     </ul>
                 </div>
                 
-                <div class="experience-card">
+                <div class="experience-card animate-on-scroll">
                     <h3>Backend Engineer</h3>
                     <h4>UHG</h4>
                     <span class="date">2022 - Present</span>
@@ -638,7 +877,7 @@
                     </ul>
                 </div>
                 
-                <div class="experience-card">
+                <div class="experience-card animate-on-scroll">
                     <h3>Backend Engineer</h3>
                     <h4>UHG</h4>
                     <span class="date">2022-Present</span>
@@ -659,7 +898,7 @@
                 <h2>Technical Projects</h2>
             </div>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Java 11 to 21 Migration</h3>
                     </div>
@@ -677,7 +916,7 @@
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Asynchronous Logging Implementation</h3>
                     </div>
@@ -695,7 +934,7 @@
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Workflow Parallelization</h3>
                     </div>
@@ -713,7 +952,7 @@
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Kafka Event Streaming System</h3>
                     </div>
@@ -770,6 +1009,16 @@
                             <p>Hyderabad, Telangana</p>
                         </div>
                     </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Availability</h4>
+                            <p>Currently open to opportunities</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="contact-form">
@@ -810,17 +1059,18 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="https://www.linkedin.com/in/rahul-deb-687991148" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/rahul-deb-687991148" target="_blank" rel="noopener noreferrer" data-tooltip="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://github.com/rahulnits31" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/rahulnits31" target="_blank" rel="noopener noreferrer" data-tooltip="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
-            <p class="copyright">© 2025 Rahul | Backend Engineering Portfolio</p>
+            <p class="copyright">© 2025 Rahul Deb | Backend Engineering Portfolio</p>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         // Initialize EmailJS with your credentials
         (function() {
@@ -842,6 +1092,9 @@
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+            
+            // Update particle colors when theme changes
+            updateParticleColors();
         });
         
         // Smooth scrolling for navigation
@@ -854,29 +1107,19 @@
             });
         });
         
-        // Animate project cards on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
+        // Animate elements on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('animated');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
         
-        document.querySelectorAll('.project-card, .experience-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
         });
-
+        
         // Email functionality using EmailJS
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('form-status');
@@ -936,6 +1179,150 @@
                     submitBtn.innerHTML = originalBtnText;
                 });
         });
+        
+        // Scroll progress indicator
+        window.onscroll = function() {
+            // Show/hide back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+            
+            // Update active nav link
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        };
+        
+        // Back to top button functionality
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Resume button functionality
+        document.getElementById('resumeBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Resume...';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Resume Generated!';
+                this.style.backgroundColor = '#4CAF50';
+                
+                // Simulate download after a delay
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-download"></i> Download Resume';
+                    this.style.backgroundColor = '';
+                }, 2000);
+            }, 1500);
+        });
+        
+        // Function to update particle colors based on theme
+        function updateParticleColors() {
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+            
+            // Destroy existing particles
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                window.pJSDom = [];
+            }
+            
+            // Initialize with new colors
+            initParticles(primaryColor);
+        }
+        
+        // Particle background initialization with enhanced visibility
+        function initParticles(color) {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { 
+                        value: 120,  // Increased number of particles
+                        density: { 
+                            enable: true, 
+                            value_area: 700  // More dense
+                        } 
+                    },
+                    color: { 
+                        value: color 
+                    },
+                    shape: { 
+                        type: "circle", 
+                        stroke: { 
+                            width: 0, 
+                            color: "#000000" 
+                        } 
+                    },
+                    opacity: { 
+                        value: 0.7,  // More visible opacity
+                        random: true 
+                    },
+                    size: { 
+                        value: 4,  // Larger size
+                        random: true 
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 120,  // Closer connections
+                        color: color,
+                        opacity: 0.6,  // More visible connections
+                        width: 1.2  // Thicker lines
+                    },
+                    move: {
+                        enable: true,
+                        speed: 3,  // Faster movement
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { 
+                            enable: true, 
+                            mode: "grab"  // More interactive
+                        },
+                        onclick: { 
+                            enable: true, 
+                            mode: "push" 
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 150,
+                            line_linked: {
+                                opacity: 0.8
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize particles with current theme color
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+        initParticles(primaryColor);
     </script>
 </body>
 </html>
