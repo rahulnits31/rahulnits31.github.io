@@ -838,7 +838,7 @@
                     </div>
                     
                     <div style="margin-top: 2rem;">
-                        <a href="#" class="btn" id="resumeBtn">
+                        <a href="resume.pdf" class="btn" id="resumeBtn" target="_blank">
                             <i class="fas fa-download"></i> Download Resume
                         </a>
                     </div>
@@ -857,8 +857,8 @@
                     <h3>Backend Engineer & Team Lead</h3>
                     <h4>UHG.</h4>
                     <span class="date">2022 - Present</span>
-                    <p>Leading a team of 2 backend developers to design/monitor and implement high-performance Java-based services. Responsible for mentoring team members.</p>
-                    <ul>
+                     <ul>
+                        <li>Leading a team of 2 backend developers to design/monitor and implement high-performance Java-based services. Responsible for mentoring team members</li>
                         <li>Reduced API latency by 40% through optimization techniques</li>
                         <li>Implemented CI/CD pipelines for Azure deployments</li>
                         <li>Mentored 3 developers around standard backend bottleneck resolutions</li>
@@ -869,8 +869,8 @@
                     <h3>Backend Engineer</h3>
                     <h4>UHG</h4>
                     <span class="date">2022 - Present</span>
-                    <p>Developed features and maintained core backend services handling over 1,000 requests per minute. Focused on scalability and availability improvements.</p>
                     <ul>
+                        <li>Developed features and maintained core backend services handling over 1,000 requests per minute. Focused on scalability and availability improvements</li>
                         <li>Migrated legacy systems to Azure cloud infrastructure from OnPremise</li>
                         <li>Implemented Kafka-based Producers and Consumers across our APIS for Auditing</li>
                         <li>Optimized multiple microservices reducing response time by 70% for one and 40% and above for others</li>
@@ -881,8 +881,8 @@
                     <h3>Backend Engineer</h3>
                     <h4>UHG</h4>
                     <span class="date">2022-Present</span>
-                    <p>Designed and provisioned Azure infrastructure solutions for enterprise clients. Automated deployment processes and optimized resource utilization through GitHub Actions.</p>
                     <ul>
+                       <li>Designed and provisioned Azure infrastructure solutions for enterprise clients. Automated deployment processes and optimized resource utilization through GitHub Actions</li>
                         <li>Reduced cloud costs by 35% through resource optimization by migrating to memory optimized app service plans</li>
                         <li>Implemented infrastructure-as-code using Terraform</li>
                         <li>Developed monitoring solutions for Azure APIS under Azure Dashboard through KQL Queries</li>
@@ -1217,22 +1217,6 @@
                 top: 0,
                 behavior: 'smooth'
             });
-        });
-        
-        // Resume button functionality
-        document.getElementById('resumeBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Resume...';
-            setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-check"></i> Resume Generated!';
-                this.style.backgroundColor = '#4CAF50';
-                
-                // Simulate download after a delay
-                setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-download"></i> Download Resume';
-                    this.style.backgroundColor = '';
-                }, 2000);
-            }, 1500);
         });
         
         // Function to update particle colors based on theme
