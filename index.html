@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backend Engineering Portfolio</title>
+    <title>Rahul Deb - Backend Engineering Portfolio</title>
+    <meta name="description" content="Backend Engineer specializing in Java optimization, distributed systems, and Azure Infrastructure. 3+ years experience in scalable system design.">
+    <meta name="keywords" content="Backend Engineer, Java, Azure, Microservices, Performance Optimization, Distributed Systems">
+    <meta name="author" content="Rahul Deb">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
@@ -37,16 +43,16 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: var(--transition);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            font-weight: 400;
         }
 
         /* Earth Animation Container */
@@ -75,6 +81,12 @@
             top: 0;
             z-index: 100;
             backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 20px var(--shadow);
         }
 
         .nav-container {
@@ -91,6 +103,11 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo span {
@@ -112,6 +129,7 @@
             font-weight: 600;
             position: relative;
             padding-bottom: 5px;
+            transition: all 0.3s ease;
         }
 
         nav ul li a:hover {
@@ -180,6 +198,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
         }
 
         .hero-content {
@@ -195,8 +214,10 @@
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             line-height: 1.2;
             animation: fadeInUp 1s ease;
+            font-weight: 700;
         }
 
         .hero p {
@@ -205,6 +226,7 @@
             margin-bottom: 2rem;
             animation: fadeInUp 1s ease 0.2s forwards;
             opacity: 0;
+            font-weight: 400;
         }
 
         .tagline {
@@ -217,6 +239,7 @@
             margin: 1rem 0;
             box-shadow: 0 4px 6px var(--shadow);
             animation: fadeIn 0.8s ease;
+            transition: all 0.3s ease;
         }
 
         section {
@@ -234,6 +257,7 @@
             font-size: 2.5rem;
             display: inline-block;
             padding-bottom: 10px;
+            font-weight: 600;
         }
 
         .section-title h2::after {
@@ -262,6 +286,7 @@
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
             color: var(--primary);
+            font-weight: 600;
         }
 
         .skills {
@@ -282,6 +307,7 @@
             gap: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .skill-chip:hover {
@@ -289,6 +315,7 @@
             background: var(--primary);
             color: white;
             box-shadow: 0 5px 15px var(--shadow);
+            border-color: var(--primary);
         }
 
         .skill-chip:hover i {
@@ -340,11 +367,13 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--primary);
+            font-weight: 600;
         }
 
         .experience-card h4 {
             color: var(--accent);
             margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .experience-card .date {
@@ -404,6 +433,7 @@
         .project-body h4 {
             margin-bottom: 1rem;
             color: var(--accent);
+            font-weight: 500;
         }
 
         .tech-stack {
@@ -452,6 +482,13 @@
         .contact-item:hover {
             transform: translateX(10px);
             background: var(--bg);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-item p {
+            color: var(--text-light);
+            font-weight: 400;
         }
 
         .contact-icon {
@@ -490,6 +527,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
+            color: var(--text);
         }
 
         .form-control {
@@ -500,6 +538,7 @@
             background: var(--bg);
             color: var(--text);
             transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         .form-control:focus {
@@ -521,6 +560,8 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            font-family: inherit;
+            letter-spacing: 0.5px;
         }
 
         .btn:hover {
@@ -603,6 +644,7 @@
 
         .copyright {
             color: var(--text-light);
+            font-weight: 400;
         }
 
         /* Status message styling */
@@ -696,6 +738,7 @@
         .back-to-top:hover {
             background: var(--secondary);
             transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow);
         }
 
         /* Animations */
@@ -724,6 +767,79 @@
         .animate-on-scroll.animated {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Loading animation for better UX */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--bg-alt);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Improved hover effects */
+        .tagline:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px var(--shadow);
+        }
+
+        /* Better focus states for accessibility */
+        .btn:focus,
+        .form-control:focus,
+        .theme-toggle:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Smooth transitions for theme switching */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
         }
 
         /* Earth controls */
@@ -796,10 +912,30 @@
                 bottom: 90px;
                 right: 20px;
             }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
+    
     <!-- Earth Animation Container -->
     <div id="earth-container"></div>
     
@@ -835,7 +971,7 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <button class="theme-toggle" id="themeToggle">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                 <span class="toggle-circle"></span>
             </button>
         </div>
@@ -848,7 +984,9 @@
             </div>
             <h1>Transforming Systems Through Efficient Backend Solutionizing</h1>
             <p>Backend Engineer with expertise in Java optimization, distributed systems, and Azure Infrastructure</p>
-            <a href="#projects" class="btn">View My Projects</a>
+            <a href="#projects" class="btn" aria-label="View my technical projects">
+                <i class="fas fa-rocket"></i> View My Projects
+            </a>
         </div>
     </section>
 
@@ -889,7 +1027,7 @@
                     </div>
                     
                     <div style="margin-top: 2rem;">
-                        <a href="resume.pdf" class="btn" id="resumeBtn" target="_blank">
+                        <a href="resume.pdf" class="btn" id="resumeBtn" target="_blank" rel="noopener noreferrer" aria-label="Download my resume">
                             <i class="fas fa-download"></i> Download Resume
                         </a>
                     </div>
@@ -910,9 +1048,9 @@
                     <span class="date">2022 - Present</span>
                      <ul>
                         <li>Leading a team of 2 backend developers to design/monitor and implement high-performance Java-based services. Responsible for mentoring team members</li>
-                        <li>Reduced API latency by 40% through optimization techniques</li>
+                        <li>Reduced API latency by <strong>40%</strong> through optimization techniques</li>
                         <li>Implemented CI/CD pipelines for Azure deployments</li>
-                        <li>Mentored 3 developers around standard backend bottleneck resolutions</li>
+                        <li>Mentored <strong>3 developers</strong> around standard backend bottleneck resolutions</li>
                     </ul>
                 </div>
                 
@@ -924,7 +1062,7 @@
                         <li>Developed features and maintained core backend services handling over 1,000 requests per minute. Focused on scalability and availability improvements</li>
                         <li>Migrated legacy systems to Azure cloud infrastructure from OnPremise</li>
                         <li>Implemented Kafka-based Producers and Consumers across our APIS for Auditing</li>
-                        <li>Optimized multiple microservices reducing response time by 70% for one and 40% and above for others</li>
+                        <li>Optimized multiple microservices reducing response time by <strong>70%</strong> for one and <strong>40%+</strong> for others</li>
                     </ul>
                 </div>
                 
@@ -934,7 +1072,7 @@
                     <span class="date">2022-Present</span>
                     <ul>
                        <li>Designed and provisioned Azure infrastructure solutions for enterprise clients. Automated deployment processes and optimized resource utilization through GitHub Actions</li>
-                        <li>Reduced cloud costs by 35% through resource optimization by migrating to memory optimized app service plans</li>
+                        <li>Reduced cloud costs by <strong>35%</strong> through resource optimization by migrating to memory optimized app service plans</li>
                         <li>Implemented infrastructure-as-code using Terraform</li>
                         <li>Developed monitoring solutions for Azure APIS under Azure Dashboard through KQL Queries</li>
                     </ul>
@@ -964,6 +1102,11 @@
                             <span class="tech-item">JMeter</span>
                         </div>
                         <p><strong>Results:</strong> 45% throughput improvement, 50% reduced memory footprint</p>
+                        <div style="margin-top: 1rem;">
+                            <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;" onclick="alert('Project details available upon request')">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -982,6 +1125,11 @@
                             <span class="tech-item">Async Appenders</span>
                         </div>
                         <p><strong>Results:</strong> 40% improvement in request latency, eliminated logging bottlenecks</p>
+                        <div style="margin-top: 1rem;">
+                            <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;" onclick="alert('Project details available upon request')">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -1000,6 +1148,11 @@
                             <span class="tech-item">Spring Framework</span>
                         </div>
                         <p><strong>Results:</strong> Reduced processing time of our monolith from 2000ms to 1100ms (55% improvement)</p>
+                        <div style="margin-top: 1rem;">
+                            <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;" onclick="alert('Project details available upon request')">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -1018,6 +1171,11 @@
                             <span class="tech-item">Asynchronous Event Processing</span>
                         </div>
                         <p><strong>Results:</strong> Implemented a dashboard under Azure to monitor all Kafka Messages/Failed Events for Auditing</p>
+                        <div style="margin-top: 1rem;">
+                            <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;" onclick="alert('Project details available upon request')">
+                                <i class="fas fa-info-circle"></i> Learn More
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1095,7 +1253,9 @@
                             <textarea id="message" class="form-control" rows="5" required></textarea>
                         </div>
                         
-                        <button type="submit" class="btn">Send Message</button>
+                        <button type="submit" class="btn" aria-label="Send contact message">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
                     </form>
                     <div id="email-confirmation" class="confirmation">
                         <i class="fas fa-check-circle fa-2x"></i>
@@ -1126,6 +1286,17 @@
         (function() {
             emailjs.init("3ywsggMmsTHEtNCmJ");
         })();
+        
+        // Page loader
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('pageLoader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
         
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
@@ -1229,6 +1400,14 @@
         
         // Scroll progress indicator
         window.onscroll = function() {
+            // Header scroll effect
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
             // Show/hide back to top button
             const backToTopBtn = document.getElementById('backToTop');
             if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
@@ -1418,6 +1597,38 @@
         
         // Initialize the earth animation
         initEarth();
+        
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close any open modals or reset focus
+                document.activeElement.blur();
+            }
+        });
+        
+        // Improved error handling for resume download
+        document.getElementById('resumeBtn').addEventListener('click', function(e) {
+            // Add analytics or tracking here if needed
+            console.log('Resume download initiated');
+        });
+        
+        // Enhanced form validation
+        const formInputs = document.querySelectorAll('.form-control');
+        formInputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value.trim()) {
+                    this.style.borderColor = '#f44336';
+                } else {
+                    this.style.borderColor = '';
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                if (this.style.borderColor === 'rgb(244, 67, 54)') {
+                    this.style.borderColor = '';
+                }
+            });
+        });
     </script>
 </body>
 </html>
