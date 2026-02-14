@@ -3,367 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backend Engineering Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Rahul Kumar - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4895ef;
-            --text: #333;
-            --text-light: #555;
-            --bg: #f8f9fa;
-            --bg-alt: #e9ecef;
-            --card-bg: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-
-        .dark-mode {
-            --primary: #4cc9f0;
-            --secondary: #4895ef;
-            --accent: #4361ee;
-            --text: #f8f9fa;
-            --text-light: #e9ecef;
-            --bg: #121212;
-            --bg-alt: #1e1e1e;
-            --card-bg: #1e1e1e;
-            --shadow: rgba(0, 0, 0, 0.3);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: var(--transition);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
         }
 
         .container {
-            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         header {
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 10px var(--shadow);
-            position: sticky;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
-        .nav-container {
+        body.dark-mode header {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 0;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
         }
 
-        .logo span {
-            color: var(--accent);
-        }
-
-        nav ul {
+        .nav-links {
             display: flex;
             list-style: none;
+            gap: 2rem;
         }
 
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
+        .nav-links a {
+            color: white;
             text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
-            position: relative;
-            padding-bottom: 5px;
+            transition: color 0.3s ease;
         }
 
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
+        .nav-links a:hover {
+            color: #ffd700;
         }
 
         .theme-toggle {
-            background: var(--bg-alt);
+            background: none;
             border: none;
-            width: 50px;
-            height: 26px;
-            border-radius: 50px;
-            position: relative;
+            color: white;
+            font-size: 1.2rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 0 3px;
-        }
-
-        .theme-toggle .toggle-circle {
-            position: absolute;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background-color: var(--primary);
             transition: transform 0.3s ease;
         }
 
-        .dark-mode .theme-toggle .toggle-circle {
-            transform: translateX(24px);
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
         }
 
         .hero {
-            padding: 6rem 0 4rem;
             text-align: center;
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+            padding: 4rem 0;
+            color: white;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
+            animation: fadeInUp 1s ease;
         }
 
         .hero p {
-            font-size: 1.5rem;
-            color: var(--text-light);
+            font-size: 1.2rem;
             margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
         }
 
-        .tagline {
+        .cta-button {
             display: inline-block;
-            background: var(--bg-alt);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            color: var(--primary);
-            margin: 1rem 0;
-            box-shadow: 0 4px 6px var(--shadow);
+            background: #ffd700;
+            color: #333;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
         }
 
-        section {
-            padding: 5rem 0;
+        .cta-button:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
         }
 
-        .section-title {
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            margin: 2rem 0;
+            padding: 3rem 0;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .section {
+            background: rgba(0, 0, 0, 0.3);
+            color: #ecf0f1;
+        }
+
+        .section h2 {
             text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title h2 {
+            margin-bottom: 2rem;
             font-size: 2.5rem;
-            display: inline-block;
-            padding-bottom: 10px;
+            color: #333;
         }
 
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
+        body.dark-mode .section h2 {
+            color: #ecf0f1;
         }
 
         .about-content {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
             gap: 3rem;
             align-items: center;
         }
 
-        .about-text {
-            flex: 1;
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ffd700;
+            transition: transform 0.3s ease;
         }
 
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+        .profile-img:hover {
+            transform: scale(1.05);
         }
 
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
 
-        .skill-chip {
-            background: var(--bg-alt);
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .skill-chip i {
-            color: var(--primary);
-        }
-
-        .experience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .experience-card {
-            background: var(--card-bg);
-            border-radius: 10px;
+        .skill-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 2rem;
-            box-shadow: 0 5px 15px var(--shadow);
-            transition: var(--transition);
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
         }
 
-        .experience-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px var(--shadow);
+        .skill-card:hover {
+            transform: translateY(-5px);
         }
 
-        .experience-card h3 {
-            font-size: 1.5rem;
+        .skill-card i {
+            font-size: 3rem;
             margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .experience-card h4 {
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-card .date {
-            color: var(--text-light);
-            font-style: italic;
-            margin-bottom: 1rem;
-            display: block;
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .project-card {
-            background: var(--card-bg);
+            background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px var(--shadow);
-            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        body.dark-mode .project-card {
+            background: #34495e;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px var(--shadow);
+            transform: translateY(-5px);
         }
 
-        .project-header {
-            background: var(--primary);
-            color: white;
+        .project-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
             padding: 1.5rem;
         }
 
-        .project-body {
-            padding: 1.5rem;
-        }
-
-        .project-body h4 {
+        .project-content h3 {
             margin-bottom: 1rem;
-            color: var(--accent);
+            color: #333;
         }
 
-        .tech-stack {
+        body.dark-mode .project-content h3 {
+            color: #ecf0f1;
+        }
+
+        .project-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        body.dark-mode .project-content p {
+            color: #bdc3c7;
+        }
+
+        .project-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin: 1rem 0;
+            margin-bottom: 1rem;
         }
 
-        .tech-item {
-            background: var(--bg-alt);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-icon {
-            background: var(--primary);
+        .tech-tag {
+            background: #667eea;
             color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
         }
 
         .contact-form {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .form-group {
@@ -373,444 +277,447 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-weight: bold;
         }
 
-        .form-control {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid var(--bg-alt);
+            padding: 12px;
+            border: 2px solid #ddd;
             border-radius: 5px;
-            background: var(--bg);
-            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
-        .form-control:focus {
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: #667eea;
         }
 
-        .btn {
-            display: inline-block;
-            background: var(--primary);
+        .submit-btn {
+            background: #667eea;
             color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
+            padding: 12px 30px;
             border: none;
+            border-radius: 25px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--shadow);
-        }
-
-        footer {
-            background: var(--bg-alt);
-            padding: 3rem 0;
-            text-align: center;
+        .submit-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--bg);
-            color: var(--primary);
-            font-size: 1.2rem;
-            transition: var(--transition);
+            color: #667eea;
+            font-size: 2rem;
+            transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-5px);
+            color: #ffd700;
+            transform: translateY(-3px);
         }
 
-        .copyright {
-            color: var(--text-light);
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .earth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .earth {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4CAF50, #2196F3, #FF9800);
+            animation: rotate 10s linear infinite;
+            position: relative;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+        }
+
+        .earth::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 30%;
+            height: 30%;
+            background: #2196F3;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .earth::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            right: 25%;
+            width: 25%;
+            height: 25%;
+            background: #4CAF50;
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+
+        .earth-controls {
+            margin-left: 2rem;
+        }
+
+        .earth-controls button {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.5rem 1rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .earth-controls button:hover {
+            background: #5a6fd8;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .paused {
+            animation-play-state: paused;
         }
 
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
+            .nav-links {
+                display: none;
             }
-            
-            nav ul {
-                margin-top: 1rem;
-            }
-            
-            nav ul li {
-                margin: 0 1rem;
-            }
-            
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
+
             .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .earth-container {
                 flex-direction: column;
             }
-            
-            .section-title h2 {
-                font-size: 2rem;
+
+            .earth-controls {
+                margin-left: 0;
+                margin-top: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container nav-container">
-            <div class="logo">Engineering/<span>Portfolio</span></div>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <button class="theme-toggle" id="themeToggle">
-                <span class="toggle-circle"></span>
+        <nav class="container">
+            <div class="logo">Rahul Kumar</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
             </button>
-        </div>
+        </nav>
     </header>
 
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="tagline">
-                <i class="fas fa-code"></i> Backend Engineering & Team Leadership
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Hi, I'm Rahul Kumar</h1>
+                <p>Full Stack Developer & Problem Solver</p>
+                <a href="#contact" class="cta-button">Get In Touch</a>
             </div>
-            <h1>Transforming Systems Through Efficient Backend Solutions</h1>
-            <p>Senior Backend Engineer with expertise in Java optimization, distributed systems, and Azure infrastructure</p>
-            <a href="#projects" class="btn">View My Projects</a>
-        </div>
-    </section>
+        </section>
 
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
+        <section id="about" class="section">
+            <div class="container">
                 <h2>About Me</h2>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Backend Engineering & Leadership Specialist</h3>
-                    <p>I'm a passionate and at times hyperfocused backend engineer with over 3 years of experience specializing in Java-based systems, performance optimization, and cloud infrastructure. My expertise lies in transforming monolithic architectures into scalable, high-performance distributed systems.</p>
-                    <p>As a technical lead, I've successfully managed teams of developers to deliver complex backend solutions while ensuring best practices in code quality, testing, and deployment pipelines. My experience includes significant work with Azure infrastructure provisioning and optimization.</p>
-                    <p>I thrive on solving complex technical challenges and provide my two cents to fellow developers and to help them grow their skills in backend engineering and scalable system design while trying my best to absorb best industry etiquettes when it comes to solutionizing.</p>
-                    
-                    <div class="skills">
-                        <div class="skill-chip">
-                            <i class="fab fa-java"></i> Java
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-cloud"></i> Azure DevOps
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-database"></i> Sql Server
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-bolt"></i> Kafka
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-code-branch"></i> Microservices
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-server"></i> Azure App Services
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-chart-line"></i>Back-end Performance Improvement Strategies
-                        </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-users"></i> Leadership
+                <div class="about-content">
+                    <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Rahul Kumar" class="profile-img">
+                    <div>
+                        <p>I'm a passionate Full Stack Developer with expertise in modern web technologies. I love creating efficient, scalable solutions and turning ideas into reality through code.</p>
+                        <p>With a strong foundation in both frontend and backend development, I enjoy working on challenging projects that push the boundaries of what's possible on the web.</p>
+                        <div class="earth-container">
+                            <div class="earth" id="earth"></div>
+                            <div class="earth-controls">
+                                <button onclick="pauseEarth()">Pause</button>
+                                <button onclick="resumeEarth()">Resume</button>
+                                <button onclick="speedUp()">Speed Up</button>
+                                <button onclick="slowDown()">Slow Down</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="experience" style="background-color: var(--bg-alt);">
-        <div class="container">
-            <div class="section-title">
-                <h2>Professional Experience</h2>
-            </div>
-            <div class="experience-grid">
-                <div class="experience-card">
-                    <h3>Backend Engineer & Team Lead</h3>
-                    <h4>UHG.</h4>
-                    <span class="date">2022 - Present</span>
-                    <p>Leading a team of 2 backend developers to design/monitor and implement high-performance Java-based services. Responsible for mentoring team members.</p>
-                    <ul>
-                        <li>Reduced API latency by 40% through optimization techniques</li>
-                        <li>Implemented CI/CD pipelines for Azure deployments</li>
-                        <li>Mentored 3 developers around standard backend bottleneck resolutions</li>
-                    </ul>
-                </div>
-                
-                <div class="experience-card">
-                    <h3>Backend Engineer</h3>
-                    <h4>UHG</h4>
-                    <span class="date">2022 - Present</span>
-                    <p>Developed features and maintained core backend services handling over 1,000 requests per minute. Focused on scalability and availability improvements.</p>
-                    <ul>
-                        <li>Migrated legacy systems to Azure cloud infrastructure from OnPremise</li>
-                        <li>Implemented Kafka-based Producers and Consumers across our APIS for Auditing</li>
-                        <li>Optimized multiple microservices reducing response time by 70% for one and 40% and above for others</li>
-                    </ul>
-                </div>
-                
-                <div class="experience-card">
-                    <h3>Backend Engineer</h3>
-                    <h4>UHG</h4>
-                    <span class="date">2022-Present</span>
-                    <p>Designed and provisioned Azure infrastructure solutions for enterprise clients. Automated deployment processes and optimized resource utilization through GitHub Actions.</p>
-                    <ul>
-                        <li>Reduced cloud costs by 35% through resource optimization by migrating to memory optimized app service plans</li>
-                        <li>Implemented infrastructure-as-code using Terraform</li>
-                        <li>Developed monitoring solutions for Azure APIS under Azure Dashboard through KQL Queries</li>
-                    </ul>
+        <section id="skills" class="section">
+            <div class="container">
+                <h2>Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <i class="fab fa-js-square"></i>
+                        <h3>JavaScript</h3>
+                        <p>ES6+, Async/Await, DOM Manipulation</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fab fa-react"></i>
+                        <h3>React</h3>
+                        <p>Hooks, Context API, Redux</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fab fa-node-js"></i>
+                        <h3>Node.js</h3>
+                        <p>Express, RESTful APIs, MongoDB</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fab fa-python"></i>
+                        <h3>Python</h3>
+                        <p>Django, Flask, Data Analysis</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Databases</h3>
+                        <p>MySQL, PostgreSQL, MongoDB</p>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fab fa-aws"></i>
+                        <h3>Cloud</h3>
+                        <p>AWS, Docker, CI/CD</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>Technical Projects</h2>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Java 11 to 21 Migration</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Performance Optimization</h4>
-                        <p>Led the migration of 15+ microservices and a monolith from Java 11 to Java 21, leveraging new language features and performance improvements.</p>
-                        <p>Implemented Virtual Threads to handle more concurrent requests with potentially less memory footprint.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">Java 21</span>
-                            <span class="tech-item">Virtual Threads</span>
-                            <span class="tech-item">Spring Boot 3</span>
-                            <span class="tech-item">JMeter</span>
+        <section id="projects" class="section">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <img src="https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg?auto=compress&cs=tinysrgb&w=400" alt="E-commerce Platform" class="project-img">
+                        <div class="project-content">
+                            <h3>E-commerce Platform</h3>
+                            <p>A full-stack e-commerce solution with user authentication, payment integration, and admin dashboard.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                                <span class="tech-tag">Stripe</span>
+                            </div>
                         </div>
-                        <p><strong>Results:</strong> 45% throughput improvement, 50% reduced memory footprint</p>
                     </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Asynchronous Logging Implementation</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Monolith Optimization</h4>
-                        <p>Designed and implemented an asynchronous logging solution for a legacy monolith application handling 1,000 RPM.</p>
-                        <p>Reduced I/O blocking by decoupling logging operations from main request threads using a LMAX Disrupter.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">Log4j2</span>
-                            <span class="tech-item">Disruptor Pattern</span>
-                            <span class="tech-item">Java</span>
-                            <span class="tech-item">Async Appenders</span>
+                    <div class="project-card">
+                        <img src="https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Task Management App" class="project-img">
+                        <div class="project-content">
+                            <h3>Task Management App</h3>
+                            <p>A collaborative task management application with real-time updates and team collaboration features.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Socket.io</span>
+                                <span class="tech-tag">Express</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                            </div>
                         </div>
-                        <p><strong>Results:</strong> 40% improvement in request latency, eliminated logging bottlenecks</p>
                     </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Workflow Parallelization</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Concurrency Optimization</h4>
-                        <p>Identified and parallelized uncoupled workflow steps in a critical order processing service using CompletableFuture.</p>
-                        <p>Implemented a configurable thread pool management system to prevent resource exhaustion.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">CompletableFuture</span>
-                            <span class="tech-item">Java Concurrency</span>
-                            <span class="tech-item">Thread Pools</span>
-                            <span class="tech-item">Spring Framework</span>
+                    <div class="project-card">
+                        <img src="https://images.pexels.com/photos/669996/pexels-photo-669996.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Weather Dashboard" class="project-img">
+                        <div class="project-content">
+                            <h3>Weather Dashboard</h3>
+                            <p>A responsive weather application with location-based forecasts and interactive charts.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Chart.js</span>
+                                <span class="tech-tag">Weather API</span>
+                                <span class="tech-tag">CSS3</span>
+                            </div>
                         </div>
-                        <p><strong>Results:</strong> Reduced processing time of our monolith from 2000ms to 1100ms (55% improvement)</p>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Kafka Event Streaming System</h3>
-                    </div>
-                    <div class="project-body">
-                        <h4>Distributed Architecture</h4>
-                        <p>Designed and implemented a Idempotent Kafka Utility with Producer and Consumer Configuration.</p>
-                        <p>Created producer/consumer implementations with exactly-once semantics and dead-letter queue handling alonside custom error table implementations.</p>
-                        <div class="tech-stack">
-                            <span class="tech-item">Apache Kafka</span>
-                            <span class="tech-item">Spring Kafka</span>
-                            <span class="tech-item">Azure App Service</span>
-                            <span class="tech-item">Asynchronous Event Processing</span>
-                        </div>
-                        <p><strong>Results:</strong> Implemented a dashboard under Azure to monitor all Kafka Messages/Failed Events for Auditing</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact" style="background-color: var(--bg-alt);">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>rahuldebnits2021@gmail.com</p>
-                        </div>
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Contact Me</h2>
+                <form class="contact-form" onsubmit="sendEmail(event)">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+91-7002179648</p>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Hyderabad, Telangana</p>
-                        </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+                
+                <div class="social-links">
+                    <a href="https://github.com/rahulnits31" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/rahulnits31" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:rahulnits31@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+919876543210"><i class="fas fa-phone"></i></a>
                 </div>
                 
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" class="form-control" rows="5" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="resume.pdf" download class="cta-button">Download Resume</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-stack-overflow"></i></a>
-            </div>
-            <p class="copyright">© 2025 Backend Engineering Portfolio. All rights reserved.</p>
+            <p>&copy; 2024 Rahul Kumar. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
+        // Initialize EmailJS
+        (function(){
+            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+        })();
+
         // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        
-        // Check for saved theme preference or respect OS preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
-            body.classList.add('dark-mode');
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeIcon = document.querySelector('.theme-toggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
         }
-        
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+
+        // Load saved theme
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+            }
         });
-        
-        // Smooth scrolling for navigation
+
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
-        });
-        
-        // Animate project cards on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
-        }, observerOptions);
-        
-        document.querySelectorAll('.project-card, .experience-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
+        });
+
+        // Earth animation controls
+        let currentSpeed = 10;
+        const earth = document.getElementById('earth');
+
+        function pauseEarth() {
+            earth.classList.add('paused');
+        }
+
+        function resumeEarth() {
+            earth.classList.remove('paused');
+        }
+
+        function speedUp() {
+            currentSpeed = Math.max(2, currentSpeed - 2);
+            earth.style.animationDuration = currentSpeed + 's';
+        }
+
+        function slowDown() {
+            currentSpeed = Math.min(20, currentSpeed + 2);
+            earth.style.animationDuration = currentSpeed + 's';
+        }
+
+        // Contact form submission
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Replace with your EmailJS service ID and template ID
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                from_name: name,
+                from_email: email,
+                message: message
+            })
+            .then(function(response) {
+                alert('Message sent successfully!');
+                document.querySelector('.contact-form').reset();
+            }, function(error) {
+                alert('Failed to send message. Please try again.');
+                console.error('EmailJS error:', error);
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                if (document.body.classList.contains('dark-mode')) {
+                    header.style.background = 'rgba(0, 0, 0, 0.95)';
+                }
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.1)';
+                if (document.body.classList.contains('dark-mode')) {
+                    header.style.background = 'rgba(0, 0, 0, 0.3)';
+                }
+            }
         });
     </script>
 </body>
