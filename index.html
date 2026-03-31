@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backend Engineering Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --primary: #4361ee;
@@ -44,6 +46,17 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Earth Animation Container */
+        #earth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
         .container {
@@ -51,14 +64,17 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 2;
         }
 
         header {
-            background-color: var(--card-bg);
+            background-color: rgba(var(--card-bg-rgb), 0.85);
             box-shadow: 0 2px 10px var(--shadow);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(8px);
         }
 
         .nav-container {
@@ -72,6 +88,9 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .logo span {
@@ -114,6 +133,14 @@
             width: 100%;
         }
 
+        nav ul li a.active {
+            color: var(--primary);
+        }
+
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
         .theme-toggle {
             background: var(--bg-alt);
             border: none;
@@ -125,6 +152,11 @@
             display: flex;
             align-items: center;
             padding: 0 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
         }
 
         .theme-toggle .toggle-circle {
@@ -143,12 +175,18 @@
         .hero {
             padding: 6rem 0 4rem;
             text-align: center;
-            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -158,12 +196,15 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
+            animation: fadeInUp 1s ease;
         }
 
         .hero p {
             font-size: 1.5rem;
             color: var(--text-light);
             margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
         }
 
         .tagline {
@@ -175,10 +216,12 @@
             color: var(--primary);
             margin: 1rem 0;
             box-shadow: 0 4px 6px var(--shadow);
+            animation: fadeIn 0.8s ease;
         }
 
         section {
             padding: 5rem 0;
+            position: relative;
         }
 
         .section-title {
@@ -237,10 +280,24 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill-chip:hover {
+            transform: translateY(-3px);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .skill-chip:hover i {
+            color: white;
         }
 
         .skill-chip i {
             color: var(--primary);
+            transition: color 0.3s ease;
         }
 
         .experience-grid {
@@ -255,11 +312,28 @@
             padding: 2rem;
             box-shadow: 0 5px 15px var(--shadow);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
         .experience-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px var(--shadow);
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--primary);
+            transition: height 0.5s ease;
+        }
+
+        .experience-card:hover::before {
+            height: 100%;
         }
 
         .experience-card h3 {
@@ -292,10 +366,12 @@
             overflow: hidden;
             box-shadow: 0 5px 15px var(--shadow);
             transition: var(--transition);
+            position: relative;
+            transform-style: preserve-3d;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
             box-shadow: 0 15px 30px var(--shadow);
         }
 
@@ -303,10 +379,26 @@
             background: var(--primary);
             color: white;
             padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--primary);
+            transform: skewY(-2deg);
+            z-index: 0;
         }
 
         .project-body {
             padding: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .project-body h4 {
@@ -327,6 +419,13 @@
             border-radius: 50px;
             font-size: 0.85rem;
             color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+            background: var(--primary);
+            color: white;
         }
 
         .contact-container {
@@ -345,6 +444,14 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: transform 0.3s ease;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            background: var(--bg);
         }
 
         .contact-icon {
@@ -357,6 +464,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1);
+            background: var(--secondary);
         }
 
         .contact-form {
@@ -364,10 +478,12 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .form-group label {
@@ -383,11 +499,13 @@
             border-radius: 5px;
             background: var(--bg);
             color: var(--text);
+            transition: all 0.3s ease;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
         }
 
         .btn {
@@ -401,6 +519,8 @@
             border: none;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
@@ -409,10 +529,28 @@
             box-shadow: 0 5px 15px var(--shadow);
         }
 
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg);
+            transition: all 0.6s;
+        }
+
+        .btn:hover::after {
+            left: 120%;
+        }
+
         footer {
             background: var(--bg-alt);
             padding: 3rem 0;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .social-links {
@@ -433,6 +571,7 @@
             color: var(--primary);
             font-size: 1.2rem;
             transition: var(--transition);
+            position: relative;
         }
 
         .social-links a:hover {
@@ -441,8 +580,402 @@
             transform: translateY(-5px);
         }
 
+        .social-links a::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .social-links a:hover::after {
+            opacity: 1;
+        }
+
         .copyright {
             color: var(--text-light);
+        }
+
+        /* Status message styling */
+        #form-status {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            display: none;
+            z-index: 10;
+        }
+
+        .success-message {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .error-message {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn.loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .btn.loading:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s ease infinite;
+        }
+
+        @keyframes button-loading-spinner {
+            from { transform: rotate(0turn); }
+            to { transform: rotate(1turn); }
+        }
+
+        /* Email confirmation styling */
+        .confirmation {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Earth controls */
+        .earth-controls {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .earth-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .earth-btn:hover {
+            transform: scale(1.1);
+            background: var(--secondary);
+        }
+
+        /* Journey Animation Container */
+        .journey-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .journey-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .journey-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            padding: 2rem;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(50px);
+            transition: transform 0.8s ease;
+        }
+        
+        .journey-container.active .journey-content {
+            transform: translateY(0);
+        }
+        
+        .journey-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .journey-title {
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .journey-close {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .journey-close:hover {
+            transform: scale(1.2);
+            color: var(--primary);
+        }
+        
+        .journey-card {
+            background: var(--bg-alt);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .journey-card.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .journey-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .journey-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .journey-card .date {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .journey-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .journey-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .journey-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .journey-btn:disabled {
+            background: var(--bg-alt);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .journey-progress {
+            height: 5px;
+            background: var(--bg-alt);
+            border-radius: 5px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .journey-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .journey-counter {
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Hyderabad hover effect */
+        #hyderabadLocation {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        #hyderabadLocation:hover .contact-icon {
+            transform: scale(1.1);
+            background: var(--secondary);
+        }
+        
+        /* Pulse animation for Hyderabad */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 1s infinite;
+        }
+        
+        /* Highlight animation */
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+        }
+        
+        .highlight-animation {
+            animation: highlight 2s ease;
+        }
+
+        /* NEW STYLES ADDED HERE */
+        /* Move journey navigation to top corners */
+        .journey-nav-top {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        /* Highlight for project results */
+        .result-highlight {
+            background: rgba(72, 149, 239, 0.15);
+            border-left: 3px solid var(--accent);
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
@@ -453,6 +986,8 @@
             
             nav ul {
                 margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             nav ul li {
@@ -474,16 +1009,124 @@
             .section-title h2 {
                 font-size: 2rem;
             }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .earth-controls {
+                bottom: 90px;
+                right: 20px;
+            }
+            
+            .journey-content {
+                width: 95%;
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Earth Animation Container -->
+    <div id="earth-container"></div>
+    
+    <!-- Journey Animation Container -->
+    <div class="journey-container" id="journeyContainer">
+        <div class="journey-content">
+            <!-- Navigation buttons moved to top -->
+            <div class="journey-nav-top">
+                <button class="journey-btn" id="journeyPrev">
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="journey-btn" id="journeyNext">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="journey-header">
+                <h2 class="journey-title">My Engineering Journey</h2>
+                <button class="journey-close" id="journeyClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="journey-progress">
+                <div class="journey-progress-bar" id="journeyProgress"></div>
+            </div>
+            
+            <div class="journey-card" id="journeyCard1">
+                <h3>Java 11 to 21 Migration</h3>
+                <span class="date">Performance Optimization</span>
+                <p>Led the migration of 15+ microservices and a monolith from Java 11 to Java 21, leveraging new language features and performance improvements.</p>
+                <p>Implemented Virtual Threads to handle more concurrent requests with potentially less memory footprint.</p>
+                <div class="result-highlight">
+                    <p><strong>Results:</strong> 45% throughput improvement, 50% reduced memory footprint</p>
+                </div>
+            </div>
+            
+            <div class="journey-card" id="journeyCard2">
+                <h3>Asynchronous Logging Implementation</h3>
+                <span class="date">Monolith Optimization</span>
+                <p>Designed and implemented an asynchronous logging solution for a legacy monolith application handling 1,000 RPM.</p>
+                <p>Reduced I/O blocking by decoupling logging operations from main request threads using a LMAX Disrupter.</p>
+                <div class="result-highlight">
+                    <p><strong>Results:</strong> 40% improvement in request latency, eliminated logging bottlenecks</p>
+                </div>
+            </div>
+            
+            <div class="journey-card" id="journeyCard3">
+                <h3>Workflow Parallelization</h3>
+                <span class="date">Concurrency Optimization</span>
+                <p>Identified and parallelized uncoupled workflow steps in a critical order processing service using CompletableFuture.</p>
+                <p>Implemented a configurable thread pool management system to prevent resource exhaustion.</p>
+                <div class="result-highlight">
+                    <p><strong>Results:</strong> Reduced processing time of our monolith from 2000ms to 1100ms (55% improvement)</p>
+                </div>
+            </div>
+            
+            <div class="journey-card" id="journeyCard4">
+                <h3>Kafka Event Streaming System</h3>
+                <span class="date">Distributed Architecture</span>
+                <p>Designed and implemented a Idempotent Kafka Utility with Producer and Consumer Configuration.</p>
+                <p>Created producer/consumer implementations with exactly-once semantics and dead-letter queue handling.</p>
+                <div class="result-highlight">
+                    <p><strong>Results:</strong> Implemented a dashboard under Azure to monitor all Kafka Messages/Failed Events for Auditing</p>
+                </div>
+            </div>
+            
+            <div class="journey-counter">
+                Step <span id="currentStep">1</span> of <span id="totalSteps">4</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Earth Controls -->
+    <div class="earth-controls">
+        <div class="earth-btn" id="rotateToggle">
+            <i class="fas fa-pause"></i>
+        </div>
+        <div class="earth-btn" id="resetView">
+            <i class="fas fa-globe-americas"></i>
+        </div>
+        <div class="earth-btn" id="flyToHyderabad">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+    </div>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
     <header>
         <div class="container nav-container">
-            <div class="logo">Engineering/<span>Portfolio</span></div>
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                Engineering/<span>Portfolio</span>
+            </div>
             <nav>
                 <ul>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#about" class="active">About</a></li>
                     <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -498,10 +1141,10 @@
     <section class="hero">
         <div class="container hero-content">
             <div class="tagline">
-                <i class="fas fa-code"></i> Backend Engineering & Team Leadership
+                <i class="fas fa-code"></i> Engineering by First Principles
             </div>
-            <h1>Transforming Systems Through Efficient Backend Solutions</h1>
-            <p>Senior Backend Engineer with expertise in Java optimization, distributed systems, and Azure infrastructure</p>
+            <h1>Transforming Systems Through Efficient Backend Solutionizing</h1>
+            <p>Backend Engineer with expertise in Java optimization, distributed systems, and Azure Infrastructure</p>
             <a href="#projects" class="btn">View My Projects</a>
         </div>
     </section>
@@ -513,9 +1156,9 @@
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Backend Engineering & Leadership Specialist</h3>
-                    <p>I'm a passionate and at times hyperfocused backend engineer with over 3 years of experience specializing in Java-based systems, performance optimization, and cloud infrastructure. My expertise lies in transforming monolithic architectures into scalable, high-performance distributed systems.</p>
-                    <p>As a technical lead, I've successfully managed teams of developers to deliver complex backend solutions while ensuring best practices in code quality, testing, and deployment pipelines. My experience includes significant work with Azure infrastructure provisioning and optimization.</p>
+                    <h3>Backend Engineering & First Principle Enthusiast</h3>
+                    <p>I'm a passionate and at times hyperfocused Backend Engineer with over 4 years of experience specializing in Java-based systems, performance optimization, and cloud infrastructure. My expertise lies in transforming monolithic architectures into scalable, high-performance distributed systems.</p>
+                    <p>As a technical supervisor, I've successfully managed teams of developers to deliver complex backend solutions while ensuring best practices in code quality, testing, and deployment pipelines. My experience includes significant work with Azure infrastructure provisioning and optimization.</p>
                     <p>I thrive on solving complex technical challenges and provide my two cents to fellow developers and to help them grow their skills in backend engineering and scalable system design while trying my best to absorb best industry etiquettes when it comes to solutionizing.</p>
                     
                     <div class="skills">
@@ -538,11 +1181,14 @@
                             <i class="fas fa-server"></i> Azure App Services
                         </div>
                         <div class="skill-chip">
-                            <i class="fas fa-chart-line"></i>Back-end Performance Improvement Strategies
+                            <i class="fas fa-chart-line"></i> Performance Optimization
                         </div>
-                        <div class="skill-chip">
-                            <i class="fas fa-users"></i> Leadership
-                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <a href="Rahul_Resume.pdf" class="btn" id="resumeBtn" target="_blank">
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
                     </div>
                 </div>
             </div>
@@ -555,36 +1201,36 @@
                 <h2>Professional Experience</h2>
             </div>
             <div class="experience-grid">
-                <div class="experience-card">
+                <div class="experience-card animate-on-scroll">
                     <h3>Backend Engineer & Team Lead</h3>
                     <h4>UHG.</h4>
                     <span class="date">2022 - Present</span>
-                    <p>Leading a team of 2 backend developers to design/monitor and implement high-performance Java-based services. Responsible for mentoring team members.</p>
-                    <ul>
+                     <ul>
+                        <li>Leading a team of 2 backend developers to design/monitor and implement high-performance Java-based services. Responsible for mentoring team members</li>
                         <li>Reduced API latency by 40% through optimization techniques</li>
                         <li>Implemented CI/CD pipelines for Azure deployments</li>
                         <li>Mentored 3 developers around standard backend bottleneck resolutions</li>
                     </ul>
                 </div>
                 
-                <div class="experience-card">
+                <div class="experience-card animate-on-scroll">
                     <h3>Backend Engineer</h3>
                     <h4>UHG</h4>
                     <span class="date">2022 - Present</span>
-                    <p>Developed features and maintained core backend services handling over 1,000 requests per minute. Focused on scalability and availability improvements.</p>
                     <ul>
+                        <li>Developed features and maintained core backend services handling over 1,000 requests per minute. Focused on scalability and availability improvements</li>
                         <li>Migrated legacy systems to Azure cloud infrastructure from OnPremise</li>
                         <li>Implemented Kafka-based Producers and Consumers across our APIS for Auditing</li>
                         <li>Optimized multiple microservices reducing response time by 70% for one and 40% and above for others</li>
                     </ul>
                 </div>
                 
-                <div class="experience-card">
+                <div class="experience-card animate-on-scroll">
                     <h3>Backend Engineer</h3>
                     <h4>UHG</h4>
                     <span class="date">2022-Present</span>
-                    <p>Designed and provisioned Azure infrastructure solutions for enterprise clients. Automated deployment processes and optimized resource utilization through GitHub Actions.</p>
                     <ul>
+                       <li>Designed and provisioned Azure infrastructure solutions for enterprise clients. Automated deployment processes and optimized resource utilization through GitHub Actions</li>
                         <li>Reduced cloud costs by 35% through resource optimization by migrating to memory optimized app service plans</li>
                         <li>Implemented infrastructure-as-code using Terraform</li>
                         <li>Developed monitoring solutions for Azure APIS under Azure Dashboard through KQL Queries</li>
@@ -600,7 +1246,7 @@
                 <h2>Technical Projects</h2>
             </div>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Java 11 to 21 Migration</h3>
                     </div>
@@ -614,11 +1260,13 @@
                             <span class="tech-item">Spring Boot 3</span>
                             <span class="tech-item">JMeter</span>
                         </div>
-                        <p><strong>Results:</strong> 45% throughput improvement, 50% reduced memory footprint</p>
+                        <div class="result-highlight">
+                            <p><strong>Results:</strong> 45% throughput improvement, 50% reduced memory footprint</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Asynchronous Logging Implementation</h3>
                     </div>
@@ -632,11 +1280,13 @@
                             <span class="tech-item">Java</span>
                             <span class="tech-item">Async Appenders</span>
                         </div>
-                        <p><strong>Results:</strong> 40% improvement in request latency, eliminated logging bottlenecks</p>
+                        <div class="result-highlight">
+                            <p><strong>Results:</strong> 40% improvement in request latency, eliminated logging bottlenecks</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Workflow Parallelization</h3>
                     </div>
@@ -650,11 +1300,13 @@
                             <span class="tech-item">Thread Pools</span>
                             <span class="tech-item">Spring Framework</span>
                         </div>
-                        <p><strong>Results:</strong> Reduced processing time of our monolith from 2000ms to 1100ms (55% improvement)</p>
+                        <div class="result-highlight">
+                            <p><strong>Results:</strong> Reduced processing time of our monolith from 2000ms to 1100ms (55% improvement)</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="project-card">
+                <div class="project-card animate-on-scroll">
                     <div class="project-header">
                         <h3>Kafka Event Streaming System</h3>
                     </div>
@@ -668,7 +1320,9 @@
                             <span class="tech-item">Azure App Service</span>
                             <span class="tech-item">Asynchronous Event Processing</span>
                         </div>
-                        <p><strong>Results:</strong> Implemented a dashboard under Azure to monitor all Kafka Messages/Failed Events for Auditing</p>
+                        <div class="result-highlight">
+                            <p><strong>Results:</strong> Implemented a dashboard under Azure to monitor all Kafka Messages/Failed Events for Auditing</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -702,7 +1356,7 @@
                         </div>
                     </div>
                     
-                    <div class="contact-item">
+                    <div class="contact-item" id="hyderabadLocation">
                         <div class="contact-icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
@@ -711,9 +1365,20 @@
                             <p>Hyderabad, Telangana</p>
                         </div>
                     </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Availability</h4>
+                            <p>Currently open to opportunities</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="contact-form">
+                    <div id="form-status"></div>
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -737,6 +1402,11 @@
                         
                         <button type="submit" class="btn">Send Message</button>
                     </form>
+                    <div id="email-confirmation" class="confirmation">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                        <h3>Message Sent Successfully!</h3>
+                        <p>Thank you for reaching out. I'll get back to you soon.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -745,16 +1415,23 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                <a href="https://www.linkedin.com/in/rahul-deb-687991148" target="_blank" rel="noopener noreferrer" data-tooltip="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/rahulnits31" target="_blank" rel="noopener noreferrer" data-tooltip="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
             </div>
-            <p class="copyright">© 2025 Backend Engineering Portfolio. All rights reserved.</p>
+            <p class="copyright">© 2026 Rahul Deb | Backend Engineering Portfolio</p>
         </div>
     </footer>
 
     <script>
+        // Initialize EmailJS with your credentials
+        (function() {
+            emailjs.init("3ywsggMmsTHEtNCmJ");
+        })();
+        
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
@@ -782,35 +1459,363 @@
             });
         });
         
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
-        });
-        
-        // Animate project cards on scroll
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
+        // Animate elements on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('animated');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
         
-        document.querySelectorAll('.project-card, .experience-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Email functionality using EmailJS
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+        const emailConfirmation = document.getElementById('email-confirmation');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '';
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                to_email: 'rahuldebnits2021@gmail.com' // Your email address
+            };
+            
+            // Send email using EmailJS
+            emailjs.send('rahul_email', 'template_k75ukda', formData)
+                .then(function(response) {
+                    // Success message
+                    formStatus.textContent = 'Message sent successfully!';
+                    formStatus.className = 'success-message';
+                    formStatus.style.display = 'block';
+                    
+                    // Show confirmation message
+                    emailConfirmation.style.display = 'block';
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Hide status message after 5 seconds
+                    setTimeout(() => {
+                        formStatus.style.display = 'none';
+                    }, 5000);
+                }, function(error) {
+                    // Error message
+                    formStatus.textContent = 'Failed to send message. Please try again or email me directly.';
+                    formStatus.className = 'error-message';
+                    formStatus.style.display = 'block';
+                    
+                    // Hide confirmation message
+                    emailConfirmation.style.display = 'none';
+                    
+                    // Log error for debugging
+                    console.error('EmailJS Error:', error);
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.classList.remove('loading');
+                    submitBtn.innerHTML = originalBtnText;
+                });
+        });
+        
+        // Scroll progress indicator
+        window.onscroll = function() {
+            // Show/hide back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+            
+            // Update active nav link
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        };
+        
+        // Back to top button functionality
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Google Earth-like Animation with Three.js (without blue dots)
+        let scene, camera, renderer, earth, clouds, stars, rotating = true;
+        const earthContainer = document.getElementById('earth-container');
+        let animationFrameId;
+        let cameraTarget = { x: 0, y: 0, z: 0 };
+        let cameraPosition = { x: 0, y: 0, z: 15 };
+        
+        function initEarth() {
+            // Create scene
+            scene = new THREE.Scene();
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(45, earthContainer.clientWidth / earthContainer.clientHeight, 0.1, 1000);
+            camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+            camera.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z);
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(earthContainer.clientWidth, earthContainer.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            earthContainer.appendChild(renderer.domElement);
+            
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0x333333);
+            scene.add(ambientLight);
+            
+            // Add directional light (sun)
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+            
+            // Create earth
+            const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
+            
+            // Earth texture (public domain NASA image)
+            const earthTexture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+            const earthBump = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
+            const earthSpec = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg');
+            
+            const earthMaterial = new THREE.MeshPhongMaterial({
+                map: earthTexture,
+                bumpMap: earthBump,
+                bumpScale: 0.05,
+                specularMap: earthSpec,
+                specular: new THREE.Color(0x333333),
+                shininess: 5
+            });
+            
+            earth = new THREE.Mesh(earthGeometry, earthMaterial);
+            scene.add(earth);
+            
+            // Create clouds
+            const cloudGeometry = new THREE.SphereGeometry(5.05, 64, 64);
+            const cloudTexture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png');
+            
+            const cloudMaterial = new THREE.MeshPhongMaterial({
+                map: cloudTexture,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+            scene.add(clouds);
+            
+            // Create stars
+            const starGeometry = new THREE.BufferGeometry();
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.2,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const starVertices = [];
+            for (let i = 0; i < 10000; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starVertices.push(x, y, z);
+            }
+            
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Start animation
+            animate();
+        }
+        
+        function onWindowResize() {
+            camera.aspect = earthContainer.clientWidth / earthContainer.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(earthContainer.clientWidth, earthContainer.clientHeight);
+        }
+        
+        function animate() {
+            animationFrameId = requestAnimationFrame(animate);
+            
+            if (rotating) {
+                earth.rotation.y += 0.001;
+                clouds.rotation.y += 0.0015;
+            }
+            
+            // Smooth camera movement
+            camera.position.x += (cameraPosition.x - camera.position.x) * 0.05;
+            camera.position.y += (cameraPosition.y - camera.position.y) * 0.05;
+            camera.position.z += (cameraPosition.z - camera.position.z) * 0.05;
+            
+            camera.lookAt(cameraTarget.x, cameraTarget.y, cameraTarget.z);
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Earth controls
+        const rotateToggle = document.getElementById('rotateToggle');
+        rotateToggle.addEventListener('click', () => {
+            rotating = !rotating;
+            rotateToggle.innerHTML = rotating ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+        });
+        
+        const resetView = document.getElementById('resetView');
+        resetView.addEventListener('click', () => {
+            cameraPosition = { x: 0, y: 0, z: 15 };
+            cameraTarget = { x: 0, y: 0, z: 0 };
+        });
+        
+        const flyToHyderabad = document.getElementById('flyToHyderabad');
+        flyToHyderabad.addEventListener('click', flyToHyderabadPosition);
+        
+        function flyToHyderabadPosition() {
+            // Hyderabad coordinates (approx)
+            const hyderabadLat = 17.3850;
+            const hyderabadLon = 78.4867;
+            
+            // Convert to 3D position
+            const phi = (90 - hyderabadLat) * Math.PI / 180;
+            const theta = (hyderabadLon + 180) * Math.PI / 180;
+            
+            const radius = 5;
+            cameraTarget.x = -radius * Math.sin(phi) * Math.cos(theta);
+            cameraTarget.y = radius * Math.cos(phi);
+            cameraTarget.z = radius * Math.sin(phi) * Math.sin(theta);
+            
+            // Position camera closer
+            cameraPosition.x = cameraTarget.x * 1.5;
+            cameraPosition.y = cameraTarget.y * 1.5;
+            cameraPosition.z = cameraTarget.z * 1.5 + 3;
+            
+            // Show journey animation after a delay
+            setTimeout(() => {
+                showJourneyAnimation();
+            }, 1500);
+        }
+        
+        // Initialize the earth animation
+        initEarth();
+        
+        // Journey Animation Functionality
+        const journeyContainer = document.getElementById('journeyContainer');
+        const journeyClose = document.getElementById('journeyClose');
+        const hyderabadLocation = document.getElementById('hyderabadLocation');
+        const journeyPrev = document.getElementById('journeyPrev');
+        const journeyNext = document.getElementById('journeyNext');
+        const journeyProgress = document.getElementById('journeyProgress');
+        const currentStepElement = document.getElementById('currentStep');
+        const totalStepsElement = document.getElementById('totalSteps');
+        
+        let currentJourneyStep = 1;
+        const totalJourneySteps = 4;
+        
+        // Initialize step counter
+        totalStepsElement.textContent = totalJourneySteps;
+        
+        // Show journey animation
+        function showJourneyAnimation() {
+            journeyContainer.classList.add('active');
+            currentJourneyStep = 1;
+            updateJourneyStep();
+        }
+        
+        // Close journey animation
+        journeyClose.addEventListener('click', () => {
+            journeyContainer.classList.remove('active');
+        });
+        
+        // Previous journey step
+        journeyPrev.addEventListener('click', () => {
+            if (currentJourneyStep > 1) {
+                currentJourneyStep--;
+                updateJourneyStep();
+            }
+        });
+        
+        // Next journey step
+        journeyNext.addEventListener('click', () => {
+            if (currentJourneyStep < totalJourneySteps) {
+                currentJourneyStep++;
+                updateJourneyStep();
+            } else {
+                // Close journey when reaching the end
+                journeyContainer.classList.remove('active');
+                // Automatically reset to earth view
+                resetView.click(); // Trigger the resetView function
+            }
+        });
+        
+        function updateJourneyStep() {
+            // Update step counter
+            currentStepElement.textContent = currentJourneyStep;
+            
+            // Update progress bar
+            const progressPercent = (currentJourneyStep / totalJourneySteps) * 100;
+            journeyProgress.style.width = `${progressPercent}%`;
+            
+            // Update card visibility
+            document.querySelectorAll('.journey-card').forEach((card, index) => {
+                if (index + 1 === currentJourneyStep) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+            
+            // Enable/disable navigation buttons
+            journeyPrev.disabled = currentJourneyStep === 1;
+        }
+        
+        // Hyderabad click effect
+        hyderabadLocation.addEventListener('click', function() {
+            // Fly to Hyderabad
+            flyToHyderabadPosition();
+        });
+        
+        // Add hover effect to Hyderabad location
+        hyderabadLocation.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.contact-icon');
+            icon.classList.add('pulse-animation');
+        });
+        
+        hyderabadLocation.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.contact-icon');
+            icon.classList.remove('pulse-animation');
         });
     </script>
 </body>
